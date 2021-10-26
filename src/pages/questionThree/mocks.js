@@ -8,20 +8,22 @@ import UUID from "uuid/v4";
 
 const defaultMock = {
 	species: 'Human',
-	name : 'Jon Snow',
+	name: 'Jon Snow',
 	icon: AcUnit,
 	description: 'You know nothing, Jon Snow.'
 };
 
 
-const createRowData = ({name, species, Icon, description}) => {
-	let rowData = defaultMock;
+const createRowData = ({ name, species, Icon, description }) => {
+	let rowData = { ...defaultMock };
+
 	rowData.id = UUID();
-	rowData.name = name ? name: rowData.name;
-	rowData.species = species ? species: rowData.species;
+	rowData.name = name ? name : rowData.name;
+	rowData.species = species ? species : rowData.species;
 	rowData.icon = Icon ? Icon : rowData.icon;
 	rowData.description = description ? description : rowData.description;
-	return rowData
+
+	return rowData;
 }
 
 
