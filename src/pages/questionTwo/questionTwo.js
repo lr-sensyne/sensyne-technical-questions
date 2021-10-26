@@ -1,4 +1,4 @@
-import React, { Component} from 'react'
+import React, { Component } from 'react'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -11,34 +11,64 @@ import { getCardDetails } from './api'
 import styles from './styles'
 
 class QuestionTwo extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
 			title: null,
 			imgSrc: null,
 			body: '',
 			loading: true,
+			error: null,
 		};
-		getCardDetails.then(({title, imgSrc, body}) =>{
-			this.setState({
-				title:  title,
-				imgSrc: imgSrc,
-				body: body,
-				loading: false,
-			})
-		})
 	}
-	render(){
+
+	componentDidMount() {
+		this.fetchCardDetails();
+	}
+
+	fetchCardDetails = async () => {
+		try {
+			const cardDetails = await getCardDetails();
+
+			this.setState({
+				title: cardDetails.title,
+				imgSrc: cardDetails.imgSrc,
+				body: cardDetails.body,
+				loading: false,
+				error: null,
+			});
+		} catch (error) {
+			this.setState({
+				loading: false,
+				error: 'Oops something went wrong',
+			});
+		}
+	}
+
+	render() {
 		const { classes } = this.props;
-		const { title, imgSrc, body, loading }  = this.state;
-		if(loading){
+		const { title, imgSrc, body, loading, error } = this.state;
+
+		if (loading) {
 			return (
 				<div className={classes.spinner}>
-					<CircularProgress/>
+					<CircularProgress />
 				</div>
-			)
+			);
 		}
-		return(
+
+		if (error) {
+			return (
+				<div className={classes.container}>
+					<div className={classes.error}>
+						<p>Error loading data: {error}</p>
+						<button onClick={this.fetchCardDetails}>Try again</button>
+					</div>
+				</div>
+			);
+		}
+
+		return (
 			<div className={classes.container}>
 				<Card className={classes.card}>
 					<CardMedia
@@ -52,12 +82,12 @@ class QuestionTwo extends Component {
 						</Typography>
 						<div
 							className={classes.body}
-							dangerouslySetInnerHTML={{__html:body}}
+							dangerouslySetInnerHTML={{ __html: body }}
 						/>
 					</CardContent>
 				</Card>
 			</div>
-		)
+		);
 	}
 }
 

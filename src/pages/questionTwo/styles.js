@@ -1,27 +1,36 @@
 
 const styles = {
-	container:{
+	container: {
 		display: 'flex',
 		justifyContent: 'center',
 		height: '100%',
 	},
+	error: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 	card: {
 		maxWidth: 600,
 		margin: 48,
+		display: 'flex',
+		flexDirection: 'column',
 	},
 	media: {
 		height: 240,
+		flexShrink: 0,
 	},
-	content:{
+	content: {
 		height: '100%',
 		overflow: 'auto',
 	},
-	body:{
+	body: {
 		overflow: 'auto',
 		textAlign: 'left'
 	},
-	spinner:{
-		justifyContent:'center',
+	spinner: {
+		justifyContent: 'center',
 		display: 'flex',
 		height: '100%',
 		alignItems: 'center',
