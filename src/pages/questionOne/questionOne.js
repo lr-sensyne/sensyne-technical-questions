@@ -2,27 +2,28 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 
 class QuestionOne extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
-			label: "I've been clicked: ",
 			counter: 0
-		}
-	}
-	render(){
-		const handleOnClick = () =>{
-			this.setState({
-				counter: this.state.counter + 1
-			})
 		};
+	}
+
+	handleOnClick = () => {
+		this.setState((prevState) => ({
+			counter: prevState.counter + 1
+		}));
+	}
+
+	render() {
 		return (
-			<div style={{marginTop: 48}}>
-				<Button variant="contained" onClick={handleOnClick()}  >
-					{this.state.label} {this.state.counter} times
+			<div style={{ marginTop: 48 }}>
+				<Button variant="contained" onClick={this.handleOnClick}  >
+					I've been clicked: {this.state.counter} times
 				</Button>
 			</div>
 		)
 	}
 }
 
-export default QuestionOne
+export default QuestionOne;
