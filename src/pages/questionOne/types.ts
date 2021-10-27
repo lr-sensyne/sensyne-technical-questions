@@ -1,3 +1,3 @@
 export interface IQuestionOneState {
-	counter: number;
+    counter: number;
 }

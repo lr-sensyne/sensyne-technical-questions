@@ -13,6 +13,8 @@
     "@types/react-router": "^5.1.17",
     "@types/react-router-dom": "^5.3.2",
     "axios": "^0.19.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
@@ -28,10 +30,20 @@
     "start:server": "json-server --watch db.json --port 3001 --quiet",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "lint-fix": "node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
+    "format": "node_modules/.bin/prettier --check ./src/**/*.{ts,tsx} ./src/**/*.*.{ts,tsx}",
+    "format-fix": "node_modules/.bin/prettier --write ./src/**/*.{ts,tsx} ./src/**/*.*.{ts,tsx}"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "prettier/prettier": "error"
+    }
   },
   "browserslist": {
     "production": [
