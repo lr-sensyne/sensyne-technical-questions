@@ -1,7 +1,6 @@
 import { CancellationToken } from './utils';
-import { PhoneNumberUtil } from 'google-libphonenumber';
 
-const phoneUtil = PhoneNumberUtil.getInstance();
+export const CANCELLED = 'CANCELLED';
 
 /**
  * Mock API call
@@ -12,14 +11,15 @@ export function isPhoneNumberValid(
     phoneNumber: string,
     cancelToken: CancellationToken,
 ): Promise<boolean> {
-    const isValid = phoneUtil.isValidNumber(phoneUtil.parse(phoneNumber, 'UK'));
+    const isValid = /^\d+$/.test(phoneNumber) && phoneNumber.length === 10;
 
     if (phoneNumber.length < 10) {
         return new Promise((resolve, reject) => {
             const timeout = setTimeout(() => {
                 if (cancelToken.isCancelled()) {
                     clearTimeout(timeout);
-                    return reject('Cancelled');
+
+                    return reject(CANCELLED);
                 }
 
                 resolve(isValid);

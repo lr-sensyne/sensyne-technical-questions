@@ -1,131 +1,103 @@
 import React, { useState, useRef } from 'react';
 import debounce from 'lodash.debounce';
 
-import { isPhoneNumberValid } from './api';
-import { Container, Form } from './styles';
+import { isPhoneNumberValid, CANCELLED } from './api';
+import {
+    Container,
+    DescriptionContainer,
+    Form,
+    Label,
+    Input,
+    ErrorMessage,
+} from './styles';
 import CancellationTokenSource from './utils';
 
-let cancellationToken = undefined;
 function QuestionFour() {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const cancelValidation = useRef<(() => void) | undefined>(undefined);
+    const [phoneNumberTouched, setPhoneNumberTouched] = useState(false);
+    const [error, setError] = useState('');
+    const cancelValidationToken = useRef<CancellationTokenSource | undefined>(
+        undefined,
+    );
 
-    const [errors, setErrors] = useState({
-        firstName: '',
-        lastName: '',
-        phoneNumber: '',
-    });
+    const validatePhoneNumber = debounce(
+        async (
+            phoneNumber: string,
+            cancellationTokenSource: CancellationTokenSource,
+        ) => {
+            try {
+                const isValid = await isPhoneNumberValid(
+                    phoneNumber,
+                    cancellationTokenSource.token,
+                );
 
-    const hasErrors = Object.values(errors).some((error) => error.length > 0);
+                setError(isValid ? '' : 'Please enter a valid phone number');
+            } catch (err) {
+                if (err === CANCELLED) {
+                    // Do nothing, the error happened because of cancellation
+                }
+            }
+        },
+        300,
+    );
 
-    const handleFirstNameChange = (event) => {
-        if (event.target.value === '') {
-            setErrors({
-                ...errors,
-                firstName: 'Please enter first name',
-            });
-        } else {
-            setErrors({
-                ...errors,
-                firstName: '',
-            });
-        }
-
-        setFirstName(event.target.value);
-    };
-
-    const handleLastNameChange = (event) => {
-        if (event.target.value === '') {
-            setErrors({
-                ...errors,
-                lastName: 'Please enter last name',
-            });
-        } else {
-            setErrors({
-                ...errors,
-                lastName: '',
-            });
-        }
-
-        setLastName(event.target.value);
-    };
-
-    // We don't want to call the API too often
-    const validatePhoneNumber = async (phoneNumber: string) => {
-        const newCancellationToken = new CancellationTokenSource();
-        cancellationToken = newCancellationToken;
-
-        try {
-            const isValid = await isPhoneNumberValid(
-                phoneNumber,
-                newCancellationToken.token,
-            );
-
-            setErrors({
-                ...errors,
-                phoneNumber: isValid ? '' : 'Please enter valid phone number',
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const handlePhoneNumberChange = (event) => {
+    const handlePhoneNumberChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
         setPhoneNumber(event.target.value);
 
-        if (cancellationToken !== undefined) {
-            console.log(cancellationToken);
-            cancellationToken.cancel();
-        }
-        // if (cancelValidation.current) {
-        //     cancelValidation.current();
-        // }
+        // Assume the phone is invalid before we retrieve the validation result in order to block submission
+        setError('Please enter a valid phone number');
 
-        validatePhoneNumber(event.target.value);
+        // Cancel previous validation
+        validatePhoneNumber.cancel();
+        if (cancelValidationToken.current) {
+            cancelValidationToken.current.cancel();
+        }
+
+        const newCancellationToken = new CancellationTokenSource();
+        cancelValidationToken.current = newCancellationToken;
+
+        validatePhoneNumber(event.target.value, newCancellationToken);
     };
 
-    const handleSubmit = (event) => {
+    const handlePhoneNumberBlur = () => {
+        setPhoneNumberTouched(true);
+    };
+
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+
+        alert('Thanks for contacting us!');
     };
 
     return (
         <Container>
-            <h1>Contact form</h1>
-            <p>
-                Hello, please fill out this contact form in order for us to sent
-                you a prize for your achievement
-            </p>
+            <DescriptionContainer>
+                <h1>Task description</h1>
+                <p>
+                    Your task is to fix the validation of the phone number input
+                    in the form. Notice how when you type it really quick the
+                    error persists even though the number is valid.
+                </p>
+            </DescriptionContainer>
             <Form onSubmit={handleSubmit}>
-                <label>
-                    First name:
-                    <input
-                        type="text"
-                        onChange={handleFirstNameChange}
-                        value={firstName}
-                    />
-                </label>
-                <label>
-                    Last name:
-                    <input
-                        type="text"
-                        onChange={handleLastNameChange}
-                        value={lastName}
-                    />
-                </label>
-                <label>
-                    Phone number: (Please use UK phone number without country
-                    code i.e. 7123123123)
-                    <input
+                <h2>Contact form</h2>
+                <Label>
+                    <span>Phone number:</span>
+                    <Input
                         type="text"
                         onChange={handlePhoneNumberChange}
+                        onBlur={handlePhoneNumberBlur}
                         value={phoneNumber}
                         maxLength={10}
                     />
-                </label>
-                {errors.phoneNumber && <p>{errors.phoneNumber}</p>}
-                <button disabled={hasErrors}>Submit</button>
+                </Label>
+                {error && <ErrorMessage>{error}</ErrorMessage>}
+
+                <button disabled={!phoneNumberTouched || error !== ''}>
+                    Submit
+                </button>
             </Form>
         </Container>
     );

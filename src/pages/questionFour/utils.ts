@@ -1,5 +1,3 @@
-const CANCEL = Symbol();
-
 export class CancellationToken {
     cancelled: boolean;
 
@@ -7,17 +5,11 @@ export class CancellationToken {
         this.cancelled = false;
     }
 
-    throwIfCancelled() {
-        if (this.isCancelled()) {
-            throw 'Cancelled!';
-        }
-    }
-
     isCancelled() {
         return this.cancelled === true;
     }
 
-    [CANCEL]() {
+    cancel() {
         this.cancelled = true;
     }
 }
@@ -30,6 +22,6 @@ export default class CancellationTokenSource {
     }
 
     cancel() {
-        this.token[CANCEL]();
+        this.token.cancel();
     }
 }
