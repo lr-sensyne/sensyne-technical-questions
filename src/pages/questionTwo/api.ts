@@ -4,7 +4,7 @@ import { ICardDetails } from './types';
 
 async function getCardDetails() {
     return axios
-        .get<ICardDetails>('http://localhost:3001/example')
+        .get<ICardDetails | undefined>('http://localhost:3001/example')
         .then((response) => response.data);
 }
 

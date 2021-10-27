@@ -4,8 +4,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-
 import CircularProgress from '@material-ui/core/CircularProgress';
+import DOMPurify from 'dompurify';
 
 import { getCardDetails } from './api';
 import { IQuestionTwoProps, IQuestionTwoState } from './types';
@@ -47,7 +47,7 @@ class QuestionTwo extends Component<IQuestionTwoProps, IQuestionTwoState> {
 
         if (loading) {
             return (
-                <div className={classes.spinner}>
+                <div className={classes.spinner} data-testid="LoaderContainer">
                     <CircularProgress />
                 </div>
             );
@@ -55,7 +55,7 @@ class QuestionTwo extends Component<IQuestionTwoProps, IQuestionTwoState> {
 
         if (error) {
             return (
-                <div className={classes.container}>
+                <div className={classes.container} data-testid="ErrorContainer">
                     <div className={classes.error}>
                         <p>Error loading data: {error}</p>
                         <button onClick={this.fetchCardDetails}>
@@ -68,7 +68,10 @@ class QuestionTwo extends Component<IQuestionTwoProps, IQuestionTwoState> {
 
         if (!cardDetails) {
             return (
-                <div className={classes.container}>
+                <div
+                    className={classes.container}
+                    data-testid="NotFoundContainer"
+                >
                     <div className={classes.error}>
                         <p>Card not found</p>
                     </div>
@@ -92,7 +95,9 @@ class QuestionTwo extends Component<IQuestionTwoProps, IQuestionTwoState> {
                         </Typography>
                         <div
                             className={classes.body}
-                            dangerouslySetInnerHTML={{ __html: body }}
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(body),
+                            }}
                         />
                     </CardContent>
                 </Card>

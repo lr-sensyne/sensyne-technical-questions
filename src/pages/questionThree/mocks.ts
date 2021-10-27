@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
 import AcUnit from '@material-ui/icons/AcUnit';
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 
 import { IMockData } from './types';
 
@@ -32,7 +32,7 @@ const createRowData = ({
 }: ICreateRowDataParams): IMockData => {
     let rowData = { ...defaultMock };
 
-    rowData.id = uuid();
+    rowData.id = v4();
     rowData.name = name ? name : rowData.name;
     rowData.species = species ? species : rowData.species;
     rowData.icon = Icon ? Icon : rowData.icon;

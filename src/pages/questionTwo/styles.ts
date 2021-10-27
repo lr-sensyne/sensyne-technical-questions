@@ -12,6 +12,7 @@ const styles = {
     },
     card: {
         maxWidth: 600,
+        minHeight: 500,
         margin: 48,
         display: 'flex',
         flexDirection: 'column' as const,

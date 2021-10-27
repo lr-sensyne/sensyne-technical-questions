@@ -31,10 +31,10 @@ function QuestionListItem(props: IQuestionListItemProps) {
 
     return (
         <>
-            <ListItem alignItems="flex-start">
+            <ListItem alignItems="flex-start" data-testid="ListItem">
                 <ListItemAvatar>
                     <Avatar>
-                        <Icon />
+                        <Icon data-testid="ListItemIcon" />
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText

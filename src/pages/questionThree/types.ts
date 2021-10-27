@@ -9,6 +9,6 @@ export interface IMockData {
 }
 
 export interface IQuestionListItemProps {
-    divider: boolean;
+    divider?: boolean;
     item: IMockData;
 }
