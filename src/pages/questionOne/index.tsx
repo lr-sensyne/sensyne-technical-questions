@@ -3,7 +3,7 @@ import Question from './question'
 import QuestionOne from './questionOne'
 import ErrorBoundary from '../../components/errorBoundary'
 
-const QuestionOneWrapper = () =>{
+const QuestionOneWrapper = () => {
 	return (
 		<ErrorBoundary question={Question}>
 			<QuestionOne/>

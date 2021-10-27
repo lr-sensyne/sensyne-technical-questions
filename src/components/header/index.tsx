@@ -5,7 +5,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+
 import NavigationDrawer from '../navigationDrawer'
+
 const useStyles = makeStyles(theme => ({
 	menuButton: {
 		marginRight: theme.spacing(2),
@@ -21,7 +23,7 @@ export default function Header() {
 		open: false,
 	});
 
-	const toggleDrawer = (open) => {
+	const toggleDrawer = (open: boolean) => {
 		setState({ ...state, open });
 	};
 

@@ -6,10 +6,11 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
 import Divider from '@material-ui/core/Divider';
 import HomeIcon from '@material-ui/icons/Home';
 import { withRouter } from "react-router";
+
+import { INavigationDrawerProps } from './types';
 
 const useStyles = makeStyles({
 	list: {
@@ -20,19 +21,19 @@ const useStyles = makeStyles({
 	},
 });
 
-const NavigationDrawer = ({toggleDrawer, open, history}) =>{
+const NavigationDrawer = ({ toggleDrawer, open, history }: INavigationDrawerProps) =>{
 	const classes = useStyles();
 
-	const handleCloseDrawer = (event) => {
-		if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+	const handleCloseDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
+		if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
 			return;
 		}
-		toggleDrawer(false)
+		toggleDrawer(false);
 	};
 
-	const handleButtonClick = (event, url)=>{
-		handleCloseDrawer(event)
-		history.push(url)
+	const handleButtonClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, url: string)=>{
+		handleCloseDrawer(event);
+		history.push(url);
 	};
 
 	return (

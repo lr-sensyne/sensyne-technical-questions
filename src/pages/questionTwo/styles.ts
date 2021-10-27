@@ -7,7 +7,7 @@ const styles = {
 	},
 	error: {
 		display: 'flex',
-		flexDirection: 'column',
+		flexDirection: 'column' as const,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
@@ -15,7 +15,7 @@ const styles = {
 		maxWidth: 600,
 		margin: 48,
 		display: 'flex',
-		flexDirection: 'column',
+		flexDirection: 'column' as const,
 	},
 	media: {
 		height: 240,
@@ -27,7 +27,7 @@ const styles = {
 	},
 	body: {
 		overflow: 'auto',
-		textAlign: 'left'
+		textAlign: 'left' as const,
 	},
 	spinner: {
 		justifyContent: 'center',

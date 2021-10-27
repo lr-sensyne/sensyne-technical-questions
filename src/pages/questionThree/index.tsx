@@ -1,8 +1,11 @@
 import React from 'react';
+
+import ErrorBoundary from '../../components/errorBoundary'
+
 import QuestionThree from './questionThree';
 import Question from './question'
-import ErrorBoundary from '../../components/errorBoundary'
-const questionThree = () =>{
+
+const QuestionThreeWithBoundary = () => {
 	return (
 		<ErrorBoundary question={Question}>
 			<QuestionThree/>
@@ -10,4 +13,4 @@ const questionThree = () =>{
 	)
 }
 
-export default questionThree;
+export default QuestionThreeWithBoundary;

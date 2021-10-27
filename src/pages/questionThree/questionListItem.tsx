@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 
+import { IQuestionListItemProps } from './types';
+
 const useStyles = makeStyles(() => ({
 	header: {
 		fontWeight: 'bold',
@@ -21,8 +23,7 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-
-function QuestionListItem(props) {
+function QuestionListItem(props: IQuestionListItemProps) {
 	const { divider, item } = props;
 	const { icon, name, species, id, description } = item;
 	const Icon = icon;

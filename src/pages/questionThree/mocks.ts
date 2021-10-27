@@ -1,12 +1,23 @@
+import React from 'react';
+import { SvgIconProps } from "@material-ui/core/SvgIcon";
 import AcUnit from "@material-ui/icons/AcUnit";
-import UUID from "uuid/v4";
+import { uuid } from "uuidv4";
+
+import { IMockData } from './types';
+
+interface ICreateRowDataParams {
+	species: string | null; 
+	name: string | null;
+	Icon: React.FC<SvgIconProps>| null;
+	description: string | null;
+}
 
 /*
 * Please do not add all the mock data statically here.
 * While you would solve the problem, you would not be solving the bug ;)
 * */
 
-const defaultMock = {
+const defaultMock: IMockData = {
 	species: 'Human',
 	name: 'Jon Snow',
 	icon: AcUnit,
@@ -14,10 +25,10 @@ const defaultMock = {
 };
 
 
-const createRowData = ({ name, species, Icon, description }) => {
+const createRowData = ({ name, species, Icon, description }: ICreateRowDataParams): IMockData => {
 	let rowData = { ...defaultMock };
 
-	rowData.id = UUID();
+	rowData.id = uuid();
 	rowData.name = name ? name : rowData.name;
 	rowData.species = species ? species : rowData.species;
 	rowData.icon = Icon ? Icon : rowData.icon;

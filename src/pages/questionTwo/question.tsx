@@ -1,22 +1,30 @@
 import React from 'react'
 import Typography from "@material-ui/core/Typography";
+import Link from '@material-ui/core/Link';
 import {CardMedia} from "@material-ui/core";
+
 import Solution from "./images/solution.png";
 
-const question = ()=>{
+const Question = () => {
 	return (
 		<div>
 			<Typography variant="h4" gutterBottom>
-				Question One
+				Question Two
 			</Typography>
 			<Typography variant="h5" gutterBottom>
-				Render Bug
+				Api Call
 			</Typography>
 			<Typography variant="body1" gutterBottom>
-				This task revolves around a bug in the render method of a basic component.
+				If you started this application with 'yarn start' a json server should now be running on port 3001
 			</Typography>
 			<Typography variant="body1" gutterBottom>
-				Your task if you choose to accept it, is to resolve this bug (displayed on the right and in the console) .
+				The Api can be found here:
+				<Link href="http://localhost:3001/example" target="_blank" >
+					http://localhost:3001/example
+				</Link>
+			</Typography>
+			<Typography variant="body1" gutterBottom>
+				Your task if you choose to accept it, is to resolve this bug (displayed on the right and in the console) so that the card component displays the data from the API.
 			</Typography>
 			<Typography variant="body1" gutterBottom>
 				As with all the questions in this tech test, you may or may not wish to refactor some of the code.
@@ -28,7 +36,7 @@ const question = ()=>{
 				image={Solution}
 				style={{
 					width: '100%',
-					height: 100,
+					height: 500,
 					backgroundSize: 'contain',
 				}}
 				title="The Solution"
@@ -37,4 +45,4 @@ const question = ()=>{
 	)
 };
 
-export default 	question
+export default Question;

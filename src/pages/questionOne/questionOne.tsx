@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 
-class QuestionOne extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			counter: 0
-		};
-	}
+import { IQuestionOneState } from './types';
+
+class QuestionOne extends Component<{}, IQuestionOneState> {
+	state = {
+		counter: 0,
+	};
 
 	handleOnClick = () => {
 		this.setState((prevState) => ({

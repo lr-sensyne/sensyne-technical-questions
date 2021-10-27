@@ -1,8 +1,10 @@
 import React from 'react'
 import Typography from "@material-ui/core/Typography";
-import Solution from './images/solution.png'
 import { CardMedia } from '@material-ui/core';
-const question = ()=>{
+
+import Solution from './images/solution.png'
+
+const Question = () => {
 	return (
 		<div>
 			<Typography variant="h4" gutterBottom>
@@ -36,4 +38,4 @@ const question = ()=>{
 	)
 };
 
-export default 	question
+export default Question;

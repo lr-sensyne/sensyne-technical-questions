@@ -35,7 +35,13 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-const mockData = sort(createMockData(), (a, b) => a.icon.displayName.localeCompare(b.icon.displayName));
+const mockData = sort(createMockData(), (a, b) => {
+	if (a.icon.displayName && b.icon.displayName) {
+		return a.icon.displayName.localeCompare(b.icon.displayName)
+	}
+	
+	return 0;
+});
 
 function QuestionThree() {
 	const classes = useStyles();

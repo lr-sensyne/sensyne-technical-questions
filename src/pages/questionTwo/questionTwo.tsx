@@ -8,15 +8,13 @@ import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { getCardDetails } from './api'
+import { IQuestionTwoProps, IQuestionTwoState } from './types';
 import styles from './styles'
 
-class QuestionTwo extends Component {
-	constructor(props) {
+class QuestionTwo extends Component<IQuestionTwoProps, IQuestionTwoState> {
+	constructor(props: IQuestionTwoProps) {
 		super(props);
 		this.state = {
-			title: null,
-			imgSrc: null,
-			body: '',
 			loading: true,
 			error: null,
 		};
@@ -31,9 +29,7 @@ class QuestionTwo extends Component {
 			const cardDetails = await getCardDetails();
 
 			this.setState({
-				title: cardDetails.title,
-				imgSrc: cardDetails.imgSrc,
-				body: cardDetails.body,
+				cardDetails,
 				loading: false,
 				error: null,
 			});
@@ -47,7 +43,7 @@ class QuestionTwo extends Component {
 
 	render() {
 		const { classes } = this.props;
-		const { title, imgSrc, body, loading, error } = this.state;
+		const { cardDetails, loading, error } = this.state;
 
 		if (loading) {
 			return (
@@ -67,6 +63,18 @@ class QuestionTwo extends Component {
 				</div>
 			);
 		}
+
+		if (!cardDetails) {
+			return (
+				<div className={classes.container}>
+					<div className={classes.error}>
+						<p>Card not found</p>
+					</div>
+				</div>
+			);
+		}
+
+		const { title, imgSrc, body } = cardDetails;
 
 		return (
 			<div className={classes.container}>

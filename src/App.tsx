@@ -5,7 +5,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import NavigationDrawer from './components/navigationDrawer'
+
 import Home from './pages/home';
 import QuestionOne from './pages/questionOne'
 import QuestionTwo from './pages/questionTwo'
@@ -18,7 +18,6 @@ function App() {
     <div className="App">
       <Router>
         <AppBar/>
-        <NavigationDrawer/>
         <div style={{flex: 1, overflow:'auto'}}>
           <Switch>
             <Route path="/questionOne">

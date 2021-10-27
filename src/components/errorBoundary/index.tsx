@@ -1,31 +1,37 @@
-import React from 'react'
+import React, { ErrorInfo } from 'react'
 
-class ErrorBoundary extends React.Component {
-	constructor(props) {
+import { IErrorBoundaryProps, IErrorBoundaryState } from './types';
+
+class ErrorBoundary extends React.Component<IErrorBoundaryProps, IErrorBoundaryState> {
+	constructor(props: IErrorBoundaryProps) {
 		super(props);
-		this.state = { error: null, errorInfo: null };
+		this.state = {
+			error: null,
+			errorInfo: null,
+		};
 	}
 
-	componentDidCatch(error, errorInfo) {
+	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
 		this.setState({
 			error: error,
 			errorInfo: errorInfo
 		})
 	}
 
-
 	render() {
-		if (this.state.errorInfo) {
+		const { question = DefaultQuestion } = this.props;
+
+		if (this.state.errorInfo !== null) {
 			// Error path
 			return (
 				<div style={{display: 'flex', flexDirection:'row', flex: 1}}>
 					<div style={{flex: 1, margin: 24, textAlign: 'left'}}>
-						{this.props.question()}
+						{question()}
 					</div>
 					<div style={{display: 'flex', flexDirection:'column', alignItems:'center', flex: 1}}>
 						<h2>Something went wrong.</h2>
 						<div style={{ whiteSpace: 'pre-wrap', maxWidth: 400, textAlign:'left', alignSelf:'center'}}>
-							{this.state.error && this.state.error.toString()}
+							{this.state.error !== null && this.state.error.toString()}
 							<br />
 							{this.state.errorInfo.componentStack}
 						</div>
@@ -38,14 +44,12 @@ class ErrorBoundary extends React.Component {
 	}
 }
 
-const defaultQuestion = () =>{
+const DefaultQuestion = () =>{
 	return (
 		<div>
 			Please add a question to the test
 		</div>
 	)
 }
-ErrorBoundary.defaultProps = {
-	question: defaultQuestion
-}
-export default ErrorBoundary
+
+export default ErrorBoundary;

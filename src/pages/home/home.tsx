@@ -1,7 +1,7 @@
 import React from 'react'
 import Typography from "@material-ui/core/Typography";
 
-const home = () =>{
+const Home = () =>{
 	return (
 		<div style={{padding: 24, textAlign: 'left'}}>
 			<Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
@@ -29,4 +29,4 @@ const home = () =>{
 	)
 }
 
-export default home
+export default Home;
